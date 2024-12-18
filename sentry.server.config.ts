@@ -14,11 +14,12 @@ Sentry.init({
   debug: true,
 
   beforeSendTransaction(event) {
-    console.log(event);
+    console.log("event trace context:", event.contexts?.trace);
     return event;
   },
 });
 
 Sentry.getClient()?.on("beforeEnvelope", (envelope) => {
-  console.log(envelope);
+  const envelopeTraceHeader = envelope[0].trace;
+  console.log({ envelopeTraceHeader });
 });
